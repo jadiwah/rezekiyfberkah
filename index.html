@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gajian Penuh Berkah V9</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@600&display=swap"
+        rel="stylesheet">
+
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0B132B">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/5552/5552462.png">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: { 900: '#0B132B', 800: '#1C2541', 700: '#2A365C' },
+                        gold: { 400: '#FACC15', 500: '#EAB308', 600: '#CA8A04' }
+                    },
+                    fontFamily: { 
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        quote: ['Caveat', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0B132B;
+            color: #F3F4F6;
+        }
+
+        .neon-gold-shadow {
+            box-shadow: 0 0 15px rgba(234, 179, 8, 0.2);
+        }
+
+        .glow-border {
+            border: 1px solid rgba(234, 179, 8, 0.3);
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #2A365C;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body class="pb-36 max-w-md mx-auto min-h-screen border-x border-navy-700 bg-navy-900 relative shadow-2xl">
+
+    <!-- HEADER & QUOTE -->
+    <header
+        class="p-5 bg-gradient-to-b from-navy-800 to-navy-900 border-b border-navy-700 sticky top-0 z-30 backdrop-blur-md bg-opacity-90 space-y-2">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-[11px] text-gold-400 font-bold uppercase tracking-wider" id="monthYearHeader">
+                    <i class="fa-solid fa-calendar-days"></i> Rekap Bulanan
+                </p>
+                <h1 class="text-xl font-bold text-white flex items-center gap-2 mt-0.5">
+                    Gajian Berkah <i class="fa-solid fa-kaaba text-gold-500 text-xs"></i>
+                </h1>
+            </div>
+            <button onclick="openModal('incomeModal')" class="px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold flex items-center gap-1.5 active:scale-95 transition">
+                <i class="fa-solid fa-wallet"></i> + Masuk
+            </button>
+        </div>
+        <div class="text-center pt-0.5">
+            <p class="font-quote text-lg text-gold-400 tracking-wide">"Ubah lelah jadi lillah"</p>
+        </div>
+    </header>
+
+    <main class="p-4 space-y-5">
+
+        <!-- SETUP GAJI UTAMA & REKAP KEUANGAN -->
+        <section
+            class="p-5 rounded-2xl bg-gradient-to-br from-navy-800 via-navy-800 to-navy-700 glow-border neon-gold-shadow space-y-4">
+            <div class="flex justify-between items-center border-b border-navy-700/80 pb-3">
+                <div>
+                    <span class="text-[10px] text-gray-400 uppercase font-semibold">Gaji Utama Bulanan</span>
+                    <h3 class="text-lg font-bold text-white" id="mainSalaryText">Rp3.500.000</h3>
+                </div>
+                <button onclick="openModal('salaryModal')" class="px-2.5 py-1 bg-navy-900 border border-gold-500/30 text-gold-400 text-[10px] font-bold rounded-lg hover:bg-gold-500 hover:text-navy-900 transition">
+                    <i class="fa-solid fa-pen"></i> Ubah Gaji
+                </button>
+            </div>
+
+            <!-- RINGKASAN REKAP TOTAL -->
+            <div class="grid grid-cols-2 gap-2 text-xs">
+                <div class="p-2.5 rounded-xl bg-navy-900/60 border border-navy-700">
+                    <p class="text-gray-400 text-[10px]">Total Pemasukan</p>
+                    <p class="font-bold text-emerald-400" id="totalIncomeText">Rp3.500.000</p>
+                </div>
+                <div class="p-2.5 rounded-xl bg-navy-900/60 border border-navy-700">
+                    <p class="text-gray-400 text-[10px]">Total Pengeluaran</p>
+                    <p class="font-bold text-rose-400" id="totalExpenseText">Rp1.700.000</p>
+                </div>
+            </div>
+
+            <!-- SISA OPERASIONAL -->
+            <div class="pt-1">
+                <div class="flex justify-between items-baseline">
+                    <span class="text-xs text-gray-300 font-medium">Sisa Anggaran Operasional</span>
+                    <h2 class="text-xl font-extrabold text-gold-400" id="totalRemaining">Rp1.350.000</h2>
+                </div>
+            </div>
+        </section>
+
+        <!-- KALENDER BULANAN (GRID REKAP HARIAN) -->
+        <section class="p-4 rounded-2xl bg-navy-800 border border-navy-700 space-y-3">
+            <div class="flex justify-between items-center">
+                <h3 class="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-2">
+                    <i class="fa-solid fa-calendar-week text-gold-500"></i> Kalender Rekap Harian
+                </h3>
+                <span class="text-[10px] text-gray-400 font-semibold" id="selectedDateLabel">Klik tanggal untuk rekap</span>
+            </div>
+
+            <!-- HEADER HARI -->
+            <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-gold-400">
+                <div>Min</div>
+                <div>Sen</div>
+                <div>Sel</div>
+                <div>Rab</div>
+                <div>Kam</div>
+                <div>Jum</div>
+                <div>Sab</div>
+            </div>
+
+            <!-- GRID TANGGAL -->
+            <div id="calendarGrid" class="grid grid-cols-7 gap-1.5 text-center text-xs">
+                <!-- Tanggal di-generate via JS -->
+            </div>
+
+            <!-- INDIKATOR WARNA -->
+            <div class="flex justify-around items-center pt-2 border-t border-navy-700/60 text-[10px] text-gray-400">
+                <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Hemat
+                    (&le;35K)</div>
+                <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-rose-500"></span> Over-budget
+                </div>
+                <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-navy-700"></span> Kosong</div>
+            </div>
+        </section>
+
+        <!-- DETAIL REKAP TANGGAL TERPILIH -->
+        <section class="space-y-2.5">
+            <div class="flex justify-between items-center">
+                <h3 class="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-2">
+                    <i class="fa-solid fa-receipt text-gold-500"></i> Riwayat
+                    <span id="logDateTitle" class="text-gold-400">Hari Ini</span>
+                </h3>
+                <div class="flex gap-1.5">
+                    <button onclick="openModal('incomeModal')" class="px-2 py-1 bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-bold rounded-lg text-[10px] flex items-center gap-1 active:scale-95 transition">
+                        <i class="fa-solid fa-plus"></i> Masuk
+                    </button>
+                    <button onclick="openModal('txModal')" class="px-2 py-1 bg-gold-500 text-navy-900 font-bold rounded-lg text-[10px] flex items-center gap-1 active:scale-95 transition">
+                        <i class="fa-solid fa-minus"></i> Keluar
+                    </button>
+                </div>
+            </div>
+
+            <!-- RINGKASAN REKAP HARIAN -->
+            <div class="p-3 rounded-xl bg-navy-800 border border-navy-700 grid grid-cols-2 gap-2 text-xs">
+                <div>
+                    <p class="text-gray-400 text-[10px]">Pemasukan Tanggal Ini:</p>
+                    <p class="font-bold text-emerald-400 text-sm" id="selectedDayIncome">Rp0</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-gray-400 text-[10px]">Pengeluaran Tanggal Ini:</p>
+                    <p class="font-bold text-rose-400 text-sm" id="selectedDayExpense">Rp0</p>
+                </div>
+            </div>
+
+            <!-- RIWAYAT TRANSAKSI DUA ARUS -->
+            <div id="dailyLog" class="space-y-2">
+                <!-- Log gabungan muncul di sini -->
+            </div>
+        </section>
+
+        <!-- RENCANA PENGELUARAN MENDATANG -->
+        <section class="space-y-2.5">
+            <div class="flex justify-between items-center">
+                <h3 class="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-2">
+                    <i class="fa-solid fa-clock-rotate-left text-gold-500"></i> Rencana Pengeluaran Mendatang
+                </h3>
+                <button onclick="openModal('planModal')" class="text-xs text-gold-400 font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-plus text-[10px]"></i> Rencana
+                </button>
+            </div>
+            <div id="planContainer" class="space-y-2">
+                <!-- Rencana Items di-render via JS -->
+            </div>
+        </section>
+
+        <!-- WISHLIST / REM SHOPEE -->
+        <section class="space-y-2.5">
+            <div class="flex justify-between items-center">
+                <h3 class="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-2">
+                    <i class="fa-solid fa-bag-shopping text-gold-500"></i> Wishlist & Rem
+                </h3>
+                <button onclick="openModal('wishlistModal')" class="text-xs text-gold-400 font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-plus text-[10px]"></i> Wishlist
+                </button>
+            </div>
+            <div id="wishlistContainer" class="space-y-2">
+                <!-- Wishlist Items di-render via JS -->
+            </div>
+        </section>
+
+        <!-- FOOTER DOA BERSAMA -->
+        <footer class="pt-6 pb-2 px-4 text-center border-t border-navy-700/60 mt-8">
+            <div
+                class="p-4 rounded-2xl bg-gradient-to-b from-navy-800/80 to-navy-800/30 border border-gold-500/20 space-y-1.5">
+                <i class="fa-solid fa-hands-praying text-gold-400 text-sm"></i>
+                <p class="text-xs text-gray-300 italic leading-relaxed">
+                    "Ya Allah tunjukkan kepadaku betapa mudahnya mendapatkan rezeki yang banyak dan berkah serta ringan
+                    dalam bersedekah."
+                </p>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- MODALS -->
+    <div id="salaryModal"
+        class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
+        <div class="bg-navy-800 border-t border-gold-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-money-bill-wave text-gold-400"></i> Atur Gaji Utama</h3>
+                <button onclick="closeModal('salaryModal')" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="updateMainSalary(event)" class="space-y-3">
+                <input type="number" id="salaryInput" placeholder="Masukkan Nominal Gaji (Rp)" required class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white outline-none">
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-gold-500 to-gold-600 text-navy-900 font-bold rounded-xl text-sm">Simpan Gaji Utama</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="txModal" class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
+        <div class="bg-navy-800 border-t border-gold-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square text-gold-400"></i> Catat Pengeluaran Harian</h3>
+                <button onclick="closeModal('txModal')" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="handleTransaction(event)" class="space-y-3">
+                <input type="text" id="txName" required placeholder="Keterangan (Misal: Telur 8 Butir)" class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white focus:border-gold-500 outline-none">
+                <input type="number" id="txAmount" oninput="checkLimitWarning()" required placeholder="Nominal (Rp)" class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white focus:border-gold-500 outline-none">
+
+                <div id="warningBox"
+                    class="hidden p-3 rounded-xl bg-rose-500/10 border border-rose-500/40 text-rose-400 text-xs space-y-1">
+                    <p class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation"></i>
+                        PERINGATAN OVER-BUDGET!</p>
+                    <p id="warningText" class="text-[11px] text-rose-300/90 leading-tight"></p>
+                </div>
+
+                <button type="submit" id="submitBtn" class="w-full py-3 bg-gradient-to-r from-gold-500 to-gold-600 text-navy-900 font-bold rounded-xl text-sm shadow-md transition">Simpan Pengeluaran</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="incomeModal"
+        class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
+        <div class="bg-navy-800 border-t border-emerald-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-hand-holding-dollar text-emerald-400"></i> Pemasukan Tambahan</h3>
+                <button onclick="closeModal('incomeModal')" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="addIncome(event)" class="space-y-3">
+                <input type="text" id="incSource" placeholder="Sumber (Misal: Sisa Bulan Lalu / Freelance)" required class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white outline-none">
+                <input type="number" id="incAmount" placeholder="Nominal (Rp)" required class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white outline-none">
+                <button type="submit" class="w-full py-3 bg-emerald-500 text-navy-900 font-bold rounded-xl text-sm">Tambah Pemasukan</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="wishlistModal"
+        class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
+        <div class="bg-navy-800 border-t border-gold-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-cart-shopping text-gold-400"></i> Wishlist / Rem </h3>
+                <button onclick="closeModal('wishlistModal')" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="addWishlist(event)" class="space-y-3">
+                <input type="text" id="wishName" placeholder="Nama Barang Impian" required class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white outline-none">
+                <input type="number" id="wishPrice" placeholder="Harga Barang (Rp)" required class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white outline-none">
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-gold-500 to-gold-600 text-navy-900 font-bold rounded-xl text-sm">Simpan Wishlist</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="planModal" class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
+        <div class="bg-navy-800 border-t border-gold-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-clock text-gold-400"></i> Rencana Pengeluaran</h3>
+                <button onclick="closeModal('planModal')" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="addPlan(event)" class="space-y-3">
+                <input type="text" id="planName" placeholder="Kebutuhan (Misal: Beli Buku/Aki Motor)" required class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white outline-none">
+                <input type="number" id="planAmount" placeholder="Estimasi Biaya (Rp)" required class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white outline-none">
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-gold-500 to-gold-600 text-navy-900 font-bold rounded-xl text-sm">Simpan Rencana</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const DAILY_LIMIT = 35000;
+        const FIXED_EXPENSES = 1700000;
+        
+        let mainSalary = 3500000;
+        let selectedDay = new Date().getDate();
+        
+        let monthlyData = {};
+        
+        // ARRAY UNTUK RENCANA & WISHLIST BISA DI-DELETE
+        let plans = [{ id: 1, name: 'Servis Motor / Ganti Oli', amount: 85000 }];
+        let wishlists = [{ id: 1, name: 'Sepatu Gym / Olahraga', price: 250000 }];
+
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        const currentMonth = currentDate.getMonth();
+        const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+        function initApp() {
+            const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            document.getElementById('monthYearHeader').innerText = `Rekap • ${monthNames[currentMonth]} ${currentYear}`;
+            renderCalendarGrid();
+            selectDate(selectedDay);
+            renderPlans();
+            renderWishlists();
+            recalculate();
+        }
+
+        function renderCalendarGrid() {
+            const grid = document.getElementById('calendarGrid');
+            grid.innerHTML = '';
+            
+            const firstDayIndex = new Date(currentYear, currentMonth, 1).getDay();
+            for (let i = 0; i < firstDayIndex; i++) {
+                grid.innerHTML += `<div></div>`;
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayExpense = getDayExpense(day);
+                let colorClass = 'bg-navy-900 border-navy-700 text-gray-400';
+
+                if (monthlyData[day] && monthlyData[day].length > 0) {
+                    if (dayExpense <= DAILY_LIMIT) {
+                        colorClass = 'bg-emerald-500/20 border-emerald-500/50 text-emerald-400 font-bold';
+                    } else {
+                        colorClass = 'bg-rose-500/20 border-rose-500/50 text-rose-400 font-bold';
+                    }
+                }
+
+                const isToday = day === currentDate.getDate();
+                const todayRing = isToday ? 'ring-2 ring-gold-400' : '';
+
+                grid.innerHTML += `
+                    <button onclick="selectDate(${day})" class="h-10 rounded-xl border flex flex-col items-center justify-center transition active:scale-95 ${colorClass} ${todayRing}">
+                        <span class="text-xs">${day}</span>
+                        ${dayExpense > 0 ? `<span class="text-[8px] opacity-80">${Math.round(dayExpense/1000)}k</span>` : ''}
+                    </button>
+                `;
+            }
+        }
+
+        function getDayExpense(day) {
+            if (!monthlyData[day]) return 0;
+            return monthlyData[day]
+                .filter(item => item.type === 'out')
+                .reduce((sum, item) => sum + item.amount, 0);
+        }
+
+        function getDayIncome(day) {
+            if (!monthlyData[day]) return 0;
+            return monthlyData[day]
+                .filter(item => item.type === 'in')
+                .reduce((sum, item) => sum + item.amount, 0);
+        }
+
+        function selectDate(day) {
+            selectedDay = day;
+            document.getElementById('logDateTitle').innerText = `Tanggal ${day}`;
+            document.getElementById('selectedDateLabel').innerText = `Tanggal ${day} Dipilih`;
+            
+            const income = getDayIncome(day);
+            const expense = getDayExpense(day);
+
+            document.getElementById('selectedDayIncome').innerText = `+Rp${income.toLocaleString('id-ID')}`;
+            document.getElementById('selectedDayExpense').innerText = `-Rp${expense.toLocaleString('id-ID')}`;
+
+            renderDailyLogs();
+            renderCalendarGrid();
+        }
+
+        function renderDailyLogs() {
+            const container = document.getElementById('dailyLog');
+            const list = monthlyData[selectedDay] || [];
+            
+            if (list.length === 0) {
+                container.innerHTML = `<div class="p-3 rounded-xl bg-navy-800/50 border border-navy-700/50 text-center text-xs text-gray-400 italic">Belum ada riwayat transaksi di tanggal ${selectedDay}.</div>`;
+                return;
+            }
+
+            container.innerHTML = list.map((tx, index) => {
+                const isIncome = tx.type === 'in';
+                const sign = isIncome ? '+' : '-';
+                const textColor = isIncome ? 'text-emerald-400' : 'text-rose-400';
+                const icon = isIncome ? 'fa-arrow-down-left text-emerald-400 bg-emerald-500/10' : 'fa-arrow-up-right text-rose-400 bg-rose-500/10';
+
+                return `
+                    <div class="p-3 rounded-xl bg-navy-800 border border-navy-700 flex justify-between items-center text-xs">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-7 h-7 rounded-lg ${icon} flex items-center justify-center text-xs">
+                                <i class="fa-solid ${icon.split(' ')[0]}"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">${tx.name}</p>
+                                <p class="text-[10px] text-gray-400">${tx.time}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold ${textColor}">${sign}Rp${tx.amount.toLocaleString('id-ID')}</span>
+                            <button onclick="deleteTransaction(${index})" class="text-gray-500 hover:text-rose-400 p-1"><i class="fa-solid fa-trash-can text-xs"></i></button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function deleteTransaction(index) {
+            monthlyData[selectedDay].splice(index, 1);
+            recalculate();
+            selectDate(selectedDay);
+        }
+
+        // RENDER & DELETE RENCANA
+        function renderPlans() {
+            const container = document.getElementById('planContainer');
+            if (plans.length === 0) {
+                container.innerHTML = `<div class="p-3 rounded-xl bg-navy-800/50 border border-navy-700/50 text-center text-xs text-gray-400 italic">Belum ada rencana pengeluaran.</div>`;
+                return;
+            }
+            container.innerHTML = plans.map(p => `
+                <div class="p-3 rounded-xl bg-navy-800 border border-navy-700 flex justify-between items-center text-xs">
+                    <div>
+                        <p class="font-semibold text-white">${p.name}</p>
+                        <p class="text-[10px] text-gray-400">Target: Mendatang</p>
+                    </div>
+                    <div class="flex items-center gap-2.5">
+                        <span class="font-bold text-gold-400">Rp${p.amount.toLocaleString('id-ID')}</span>
+                        <button onclick="deletePlan(${p.id})" class="text-gray-500 hover:text-rose-400 p-1"><i class="fa-solid fa-trash-can text-xs"></i></button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function deletePlan(id) {
+            plans = plans.filter(p => p.id !== id);
+            renderPlans();
+        }
+
+        // RENDER & DELETE WISHLIST
+        function renderWishlists() {
+            const container = document.getElementById('wishlistContainer');
+            if (wishlists.length === 0) {
+                container.innerHTML = `<div class="p-3 rounded-xl bg-navy-800/50 border border-navy-700/50 text-center text-xs text-gray-400 italic">Belum ada wishlist.</div>`;
+                return;
+            }
+            container.innerHTML = wishlists.map(w => {
+                const eggDays = Math.round(w.price / 15000);
+                return `
+                    <div class="p-3 rounded-xl bg-navy-800 border border-navy-700 flex justify-between items-center text-xs">
+                        <div>
+                            <p class="font-semibold text-white">${w.name}</p>
+                            <p class="text-[10px] text-gray-400">Setara ~${eggDays} Hari Budget Telur Bulking</p>
+                        </div>
+                        <div class="flex items-center gap-2.5">
+                            <div class="text-right">
+                                <p class="font-bold text-gold-400">Rp${w.price.toLocaleString('id-ID')}</p>
+                                <span class="text-[9px] px-1.5 py-0.5 bg-gold-500/10 text-gold-400 rounded border border-gold-500/20">Ditahan Dulu</span>
+                            </div>
+                            <button onclick="deleteWishlist(${w.id})" class="text-gray-500 hover:text-rose-400 p-1"><i class="fa-solid fa-trash-can text-xs"></i></button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function deleteWishlist(id) {
+            wishlists = wishlists.filter(w => w.id !== id);
+            renderWishlists();
+        }
+
+        function handleTransaction(e) {
+            e.preventDefault();
+            const name = document.getElementById('txName').value;
+            const amount = parseInt(document.getElementById('txAmount').value);
+
+            if (name && amount) {
+                if (!monthlyData[selectedDay]) monthlyData[selectedDay] = [];
+                const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                
+                monthlyData[selectedDay].unshift({ type: 'out', name, amount, time });
+
+                recalculate();
+                selectDate(selectedDay);
+
+                document.getElementById('txName').value = '';
+                document.getElementById('txAmount').value = '';
+                closeModal('txModal');
+            }
+        }
+
+        function addIncome(e) {
+            e.preventDefault();
+            const name = document.getElementById('incSource').value;
+            const amount = parseInt(document.getElementById('incAmount').value);
+
+            if (name && amount) {
+                if (!monthlyData[selectedDay]) monthlyData[selectedDay] = [];
+                const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+                monthlyData[selectedDay].unshift({ type: 'in', name, amount, time });
+
+                recalculate();
+                selectDate(selectedDay);
+
+                document.getElementById('incSource').value = '';
+                document.getElementById('incAmount').value = '';
+                closeModal('incomeModal');
+            }
+        }
+
+        function addWishlist(e) {
+            e.preventDefault();
+            const name = document.getElementById('wishName').value;
+            const price = parseInt(document.getElementById('wishPrice').value);
+
+            if (name && price) {
+                wishlists.unshift({ id: Date.now(), name, price });
+                renderWishlists();
+                document.getElementById('wishName').value = '';
+                document.getElementById('wishPrice').value = '';
+                closeModal('wishlistModal');
+            }
+        }
+
+        function addPlan(e) {
+            e.preventDefault();
+            const name = document.getElementById('planName').value;
+            const amount = parseInt(document.getElementById('planAmount').value);
+
+            if (name && amount) {
+                plans.unshift({ id: Date.now(), name, amount });
+                renderPlans();
+                document.getElementById('planName').value = '';
+                document.getElementById('planAmount').value = '';
+                closeModal('planModal');
+            }
+        }
+
+        function recalculate() {
+            let totalDailyExpense = 0;
+            let totalExtraIncome = 0;
+
+            for (let day in monthlyData) {
+                totalDailyExpense += getDayExpense(day);
+                totalExtraIncome += getDayIncome(day);
+            }
+
+            const totalIncome = mainSalary + totalExtraIncome;
+            const totalExpense = FIXED_EXPENSES + totalDailyExpense;
+            const remainingOperational = totalIncome - totalExpense;
+
+            document.getElementById('totalIncomeText').innerText = `Rp${totalIncome.toLocaleString('id-ID')}`;
+            document.getElementById('totalExpenseText').innerText = `Rp${totalExpense.toLocaleString('id-ID')}`;
+            document.getElementById('totalRemaining').innerText = `Rp${remainingOperational.toLocaleString('id-ID')}`;
+        }
+
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+        function updateMainSalary(e) {
+            e.preventDefault();
+            const val = parseInt(document.getElementById('salaryInput').value);
+            if(val) {
+                mainSalary = val;
+                document.getElementById('mainSalaryText').innerText = `Rp${mainSalary.toLocaleString('id-ID')}`;
+                recalculate();
+                closeModal('salaryModal');
+            }
+        }
+
+        function checkLimitWarning() {
+            const amount = parseInt(document.getElementById('txAmount').value) || 0;
+            const todaySpent = getDayExpense(selectedDay);
+            const projectedSpent = todaySpent + amount;
+            const warningBox = document.getElementById('warningBox');
+            const warningText = document.getElementById('warningText');
+            const submitBtn = document.getElementById('submitBtn');
+
+            if (projectedSpent > DAILY_LIMIT) {
+                const over = projectedSpent - DAILY_LIMIT;
+                warningText.innerText = `Nominal ini membuat Anda MELEBIHI jatah harian sebesar Rp${over.toLocaleString('id-ID')}! Yakin tetap lanjut?`;
+                warningBox.classList.remove('hidden');
+                submitBtn.classList.remove('from-gold-500', 'to-gold-600');
+                submitBtn.classList.add('bg-rose-500', 'text-white');
+            } else {
+                warningBox.classList.add('hidden');
+                submitBtn.classList.add('from-gold-500', 'to-gold-600');
+                submitBtn.classList.remove('bg-rose-500', 'text-white');
+            }
+        }
+
+        // PWA REGISTRATION
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW Registered', reg))
+                    .catch(err => console.log('SW Fail', err));
+            });
+        }
+
+        initApp();
+    </script>
+</body>
+
+</html>
