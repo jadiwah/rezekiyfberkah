@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rezeki Yoga Berkah</title>
+    <title>Rezekiku Penuh Berkah</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@600&display=swap" rel="stylesheet">
     
-    <!-- PWA Meta Tags -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0B132B">
     <link rel="icon" type="image/png" href="./icon.png">
@@ -40,32 +39,35 @@
     </style>
 </head>
 <body class="pb-36 max-w-md mx-auto min-h-screen border-x border-navy-700 bg-navy-900 relative shadow-2xl">
-<div id="loginOverlay" class="fixed inset-0 bg-navy-900 z-50 flex items-center justify-center p-6">
+
+    <!-- OVERLAY LOGIN ADMIN -->
+    <div id="loginOverlay" class="fixed inset-0 bg-navy-900 z-50 flex items-center justify-center p-6">
         <div class="bg-navy-800 border border-gold-500/30 rounded-3xl p-6 w-full space-y-4 neon-gold-shadow text-center">
             <div class="w-16 h-16 rounded-full bg-navy-700 border border-gold-500/40 flex items-center justify-center text-gold-400 text-2xl mx-auto">
                 <i class="fa-solid fa-user-shield"></i>
             </div>
             <div>
-                <h2 class="text-xl font-bold text-white">Login Admin</h2>
-                <p class="text-xs text-gray-400 mt-1">Masukkkan kredensial untuk sinkronisasi data</p>
+                <h2 class="text-xl font-bold text-white">Login Admin PWA</h2>
+                <p class="text-xs text-gray-400 mt-1">Masukkan password untuk mengunci session HP</p>
             </div>
             <form onsubmit="handleLogin(event)" class="space-y-3 text-left">
                 <div>
                     <label class="text-[10px] text-gray-400 uppercase font-semibold">Username</label>
-                    <input type="text" id="loginUser" required value="admin" class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white outline-none">
+                    <input type="text" id="loginUser" required value="admin" readonly class="w-full bg-navy-900/60 border border-navy-700 rounded-xl px-3 py-2 text-sm text-gray-300 outline-none">
                 </div>
                 <div>
                     <label class="text-[10px] text-gray-400 uppercase font-semibold">Password</label>
-                    <input type="password" id="loginPass" required placeholder="Masukkan password" class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white outline-none">
+                    <input type="password" id="loginPass" required placeholder="Masukkan password" class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white outline-none focus:border-gold-500">
                 </div>
-                <p id="loginError" class="text-xs text-rose-400 hidden text-center">Password salah!</p>
-                <button type="submit" class="w-full py-3 bg-gradient-to-r from-gold-500 to-gold-600 text-navy-900 font-bold rounded-xl text-sm shadow-md transition">
-                    Masuk Aplikasi
+                <p id="loginError" class="text-xs text-rose-400 hidden text-center font-semibold">Password salah!</p>
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-gold-500 to-gold-600 text-navy-900 font-bold rounded-xl text-sm shadow-md transition active:scale-95">
+                    Masuk & Amankan Session
                 </button>
             </form>
         </div>
     </div>
-    <!-- HEADER & QUOTE -->
+
+    <!-- MAIN APP HEADER -->
     <header class="p-5 bg-gradient-to-b from-navy-800 to-navy-900 border-b border-navy-700 sticky top-0 z-30 backdrop-blur-md bg-opacity-90 space-y-2">
         <div class="flex justify-between items-center">
             <div>
@@ -76,9 +78,14 @@
                     Gajian Berkah <i class="fa-solid fa-kaaba text-gold-500 text-xs"></i>
                 </h1>
             </div>
-            <button onclick="openModal('incomeModal')" class="px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold flex items-center gap-1.5 active:scale-95 transition">
-                <i class="fa-solid fa-wallet"></i> + Masuk
-            </button>
+            <div class="flex items-center gap-2">
+                <button onclick="handleLogout()" class="p-1.5 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs" title="Logout Session">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+                <button onclick="openModal('incomeModal')" class="px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold flex items-center gap-1.5 active:scale-95 transition">
+                    <i class="fa-solid fa-wallet"></i> + Masuk
+                </button>
+            </div>
         </div>
         <div class="text-center pt-0.5">
             <p class="font-quote text-lg text-gold-400 tracking-wide">"Ubah lelah jadi lillah"</p>
@@ -86,8 +93,7 @@
     </header>
 
     <main class="p-4 space-y-5">
-
-        <!-- REKAP SALDO KEUANGAN & BATAS HARIAN -->
+        <!-- REKAP KEUANGAN -->
         <section class="p-5 rounded-2xl bg-gradient-to-br from-navy-800 via-navy-800 to-navy-700 glow-border neon-gold-shadow space-y-4">
             <div class="flex justify-between items-center border-b border-navy-700/80 pb-3">
                 <div>
@@ -117,7 +123,7 @@
                 </div>
             </div>
 
-            <!-- WIDGET BATAS HARIAN -->
+            <!-- BATAS HARIAN WIDGET -->
             <div class="p-3 rounded-xl bg-navy-900/90 border border-navy-700/80 flex justify-between items-center text-xs">
                 <div>
                     <p class="text-gray-400 text-[10px]">Terpakai Tanggal Ini:</p>
@@ -138,125 +144,32 @@
                 </h3>
                 <span class="text-[10px] text-gray-400 font-semibold" id="selectedDateLabel">Klik tanggal untuk rekap</span>
             </div>
-
             <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-gold-400">
                 <div>Min</div><div>Sen</div><div>Sel</div><div>Rab</div><div>Kam</div><div>Jum</div><div>Sab</div>
             </div>
-
             <div id="calendarGrid" class="grid grid-cols-7 gap-1.5 text-center text-xs"></div>
-
-            <div class="flex justify-around items-center pt-2 border-t border-navy-700/60 text-[10px] text-gray-400">
-                <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Hemat (&le;35K)</div>
-                <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-rose-500"></span> Over-budget</div>
-                <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-navy-700"></span> Kosong</div>
-            </div>
         </section>
 
-        <!-- DETAIL REKAP TANGGAL TERPILIH -->
+        <!-- RIWAYAT TRANSAKSI -->
         <section class="space-y-2.5">
             <div class="flex justify-between items-center">
                 <h3 class="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-2">
                     <i class="fa-solid fa-receipt text-gold-500"></i> Riwayat <span id="logDateTitle" class="text-gold-400">Hari Ini</span>
                 </h3>
                 <div class="flex gap-1.5">
-                    <button onclick="openModal('incomeModal')" class="px-2 py-1 bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-bold rounded-lg text-[10px] flex items-center gap-1 active:scale-95 transition">
+                    <button onclick="openModal('incomeModal')" class="px-2 py-1 bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-bold rounded-lg text-[10px] flex items-center gap-1">
                         <i class="fa-solid fa-plus"></i> Masuk
                     </button>
-                    <button onclick="openModal('txModal')" class="px-2 py-1 bg-gold-500 text-navy-900 font-bold rounded-lg text-[10px] flex items-center gap-1 active:scale-95 transition">
+                    <button onclick="openModal('txModal')" class="px-2 py-1 bg-gold-500 text-navy-900 font-bold rounded-lg text-[10px] flex items-center gap-1">
                         <i class="fa-solid fa-minus"></i> Keluar
                     </button>
                 </div>
             </div>
-
-            <div class="p-3 rounded-xl bg-navy-800 border border-navy-700 grid grid-cols-2 gap-2 text-xs">
-                <div>
-                    <p class="text-gray-400 text-[10px]">Pemasukan Tanggal Ini:</p>
-                    <p class="font-bold text-emerald-400 text-sm" id="selectedDayIncome">Rp0</p>
-                </div>
-                <div class="text-right">
-                    <p class="text-gray-400 text-[10px]">Pengeluaran Tanggal Ini:</p>
-                    <p class="font-bold text-rose-400 text-sm" id="selectedDayExpense">Rp0</p>
-                </div>
-            </div>
-
             <div id="dailyLog" class="space-y-2"></div>
         </section>
-
-        <!-- RENCANA PENGELUARAN MENDATANG -->
-        <section class="space-y-2.5">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h3 class="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-2">
-                        <i class="fa-solid fa-clock-rotate-left text-gold-500"></i> Rencana Pengeluaran
-                    </h3>
-                    <p class="text-[10px] text-gold-400 font-bold mt-0.5">Total Estimasi: <span id="totalPlanText">Rp0</span></p>
-                </div>
-                <button onclick="openModal('planModal')" class="text-xs text-gold-400 font-semibold flex items-center gap-1">
-                    <i class="fa-solid fa-plus text-[10px]"></i> Rencana
-                </button>
-            </div>
-            <div id="planContainer" class="space-y-2"></div>
-        </section>
-
-        <!-- WISHLIST / REM SHOPEE -->
-        <section class="space-y-2.5">
-            <div class="flex justify-between items-center">
-                <h3 class="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-2">
-                    <i class="fa-solid fa-bag-shopping text-gold-500"></i> Wishlist & Rem Shopee
-                </h3>
-                <button onclick="openModal('wishlistModal')" class="text-xs text-gold-400 font-semibold flex items-center gap-1">
-                    <i class="fa-solid fa-plus text-[10px]"></i> Wishlist
-                </button>
-            </div>
-            <div id="wishlistContainer" class="space-y-2"></div>
-        </section>
-
-        <!-- FOOTER DOA BERSAMA -->
-        <footer class="pt-6 pb-2 px-4 text-center border-t border-navy-700/60 mt-8">
-            <div class="p-4 rounded-2xl bg-gradient-to-b from-navy-800/80 to-navy-800/30 border border-gold-500/20 space-y-1.5">
-                <i class="fa-solid fa-hands-praying text-gold-400 text-sm"></i>
-                <p class="text-xs text-gray-300 italic leading-relaxed">
-                    "Ya Allah tunjukkan kepada hamba betapa mudahnya hamba mendapatkan rezeki yang banyak dan berkah serta ringan dalam bersedekah."
-                </p>
-            </div>
-        </footer>
-
     </main>
 
-    <!-- MODALS -->
-    <div id="salaryModal" class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
-        <div class="bg-navy-800 border-t border-gold-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
-            <div class="flex justify-between items-center">
-                <h3 class="text-base font-bold text-white flex items-center gap-2"><i class="fa-solid fa-money-bill-wave text-gold-400"></i> Atur Gaji Utama</h3>
-                <button onclick="closeModal('salaryModal')" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <form onsubmit="updateMainSalary(event)" class="space-y-3">
-                <input type="number" id="salaryInput" placeholder="Masukkan Nominal Gaji (Rp)" required class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white outline-none">
-                <button type="submit" class="w-full py-3 bg-gradient-to-r from-gold-500 to-gold-600 text-navy-900 font-bold rounded-xl text-sm">Simpan Gaji Utama</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="txModal" class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
-        <div class="bg-navy-800 border-t border-gold-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
-            <div class="flex justify-between items-center">
-                <h3 class="text-base font-bold text-white flex items-center gap-2"><i class="fa-solid fa-pen-to-square text-gold-400"></i> Catat Pengeluaran Harian</h3>
-                <button onclick="closeModal('txModal')" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <form onsubmit="handleTransaction(event)" class="space-y-3">
-                <input type="text" id="txName" required placeholder="Keterangan (Misal: Telur 8 Butir)" class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white focus:border-gold-500 outline-none">
-                <input type="number" id="txAmount" oninput="checkLimitWarning()" required placeholder="Nominal (Rp)" class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white focus:border-gold-500 outline-none">
-
-                <div id="warningBox" class="hidden p-3 rounded-xl bg-rose-500/10 border border-rose-500/40 text-rose-400 text-xs space-y-1">
-                    <p class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation"></i> PERINGATAN OVER-BUDGET!</p>
-                    <p id="warningText" class="text-[11px] text-rose-300/90 leading-tight"></p>
-                </div>
-
-                <button type="submit" id="submitBtn" class="w-full py-3 bg-gradient-to-r from-gold-500 to-gold-600 text-navy-900 font-bold rounded-xl text-sm shadow-md transition">Simpan Pengeluaran</button>
-            </form>
-        </div>
-    </div>
-
+    <!-- MODAL PEMASUKAN -->
     <div id="incomeModal" class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
         <div class="bg-navy-800 border-t border-emerald-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
             <div class="flex justify-between items-center">
@@ -271,131 +184,83 @@
         </div>
     </div>
 
-    <div id="wishlistModal" class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
+    <!-- MODAL PENGELUARAN -->
+    <div id="txModal" class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
         <div class="bg-navy-800 border-t border-gold-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
             <div class="flex justify-between items-center">
-                <h3 class="text-base font-bold text-white flex items-center gap-2"><i class="fa-solid fa-cart-shopping text-gold-400"></i> Wishlist / Rem Shopee</h3>
-                <button onclick="closeModal('wishlistModal')" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button>
+                <h3 class="text-base font-bold text-white flex items-center gap-2"><i class="fa-solid fa-pen-to-square text-gold-400"></i> Catat Pengeluaran Harian</h3>
+                <button onclick="closeModal('txModal')" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <form onsubmit="addWishlist(event)" class="space-y-3">
-                <input type="text" id="wishName" placeholder="Nama Barang Impian" required class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white outline-none">
-                <input type="number" id="wishPrice" placeholder="Harga Barang (Rp)" required class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white outline-none">
-                <button type="submit" class="w-full py-3 bg-gradient-to-r from-gold-500 to-gold-600 text-navy-900 font-bold rounded-xl text-sm">Simpan Wishlist</button>
+            <form onsubmit="handleTransaction(event)" class="space-y-3">
+                <input type="text" id="txName" required placeholder="Keterangan (Misal: Telur 8 Butir)" class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white focus:border-gold-500 outline-none">
+                <input type="number" id="txAmount" required placeholder="Nominal (Rp)" class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white focus:border-gold-500 outline-none">
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-gold-500 to-gold-600 text-navy-900 font-bold rounded-xl text-sm shadow-md transition">Simpan Pengeluaran</button>
             </form>
         </div>
     </div>
 
-    <div id="planModal" class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
-        <div class="bg-navy-800 border-t border-gold-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
-            <div class="flex justify-between items-center">
-                <h3 class="text-base font-bold text-white flex items-center gap-2"><i class="fa-solid fa-clock text-gold-400"></i> Rencana Pengeluaran</h3>
-                <button onclick="closeModal('planModal')" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <form onsubmit="addPlan(event)" class="space-y-3">
-                <input type="text" id="planName" placeholder="Kebutuhan (Misal: Beli Buku/Aki Motor)" required class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white outline-none">
-                <input type="number" id="planAmount" placeholder="Estimasi Biaya (Rp)" required class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white outline-none">
-                <button type="submit" class="w-full py-3 bg-gradient-to-r from-gold-500 to-gold-600 text-navy-900 font-bold rounded-xl text-sm">Simpan Rencana</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- JAVASCRIPT LENGKAP FITUR LOCALSTORAGE SAVER -->
     <script>
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzafroWFLQ1cxRj-vFLhHikgYfpZyPt2EfKoGir2RzLi50Qw4t3MRsYxgd-wpwylKkRZw/exec"; // Tempel URL dari Apps Script
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzafroWFLQ1cxRj-vFLhHikgYfpZyPt2EfKoGir2RzLi50Qw4t3MRsYxgd-wpwylKkRZw/exec"; 
+        const ADMIN_PASSWORD = 23rezeki"; // Ganti password di sini
 
-        function handleLogin(e) {
-            e.preventDefault();
-            var pass = document.getElementById('loginPass').value;
-            if (pass === "23rezeki") { // Password Admin
-                document.getElementById('loginOverlay').classList.add('hidden');
-                initApp();
-            } else {
-                document.getElementById('loginError').classList.remove('hidden');
-            }
-        }
-
-        // KIRIM TRANSAKSI KE GOOGLE SHEETS
-        function syncToGoogleSheets(type, name, amount, day) {
-            if (GOOGLE_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbzafroWFLQ1cxRj-vFLhHikgYfpZyPt2EfKoGir2RzLi50Qw4t3MRsYxgd-wpwylKkRZw/exec") return;
-            
-            var payload = {
-                action: "add",
-                tanggal: day,
-                jenis: type === 'in' ? 'Masuk' : 'Keluar',
-                keterangan: name,
-                nominal: amount,
-                waktu: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
-            };
-
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            }).then(function() {
-                console.log("Synced to Google Sheets!");
-            });
-        }
-        const DAILY_LIMIT = 35000;
-        const FIXED_EXPENSES = 1700000;
-        
         let mainSalary = 3500000;
         let now = new Date();
         let selectedDay = now.getDate();
         let currentYear = now.getFullYear();
         let currentMonth = now.getMonth();
         let daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
         let monthlyData = {};
-        let plans = [{ id: 1, name: 'Servis Motor / Ganti Oli', amount: 85000 }];
-        let wishlists = [{ id: 1, name: 'Sepatu Gym / Olahraga', price: 250000 }];
 
-        // FUNGSI UNTUK MENYIMPAN DATA KE HP
-        function saveDataToStorage() {
-            try {
-                localStorage.setItem('gb_mainSalary', JSON.stringify(mainSalary));
-                localStorage.setItem('gb_monthlyData', JSON.stringify(monthlyData));
-                localStorage.setItem('gb_plans', JSON.stringify(plans));
-                localStorage.setItem('gb_wishlists', JSON.stringify(wishlists));
-            } catch(e) {
-                console.error("Storage save error:", e);
+        // FITUR SINKRONISASI SESSION LOGIN DI HP
+        function checkSession() {
+            var isAuth = localStorage.getItem('gb_admin_session');
+            if (isAuth === "true") {
+                document.getElementById('loginOverlay').classList.add('hidden');
+                initApp();
+            } else {
+                document.getElementById('loginOverlay').classList.remove('hidden');
             }
         }
 
-        // FUNGSI UNTUK MEMBACA DATA DARI HP
-        function loadDataFromStorage() {
-            try {
-                var sSalary = localStorage.getItem('gb_mainSalary');
-                var sData = localStorage.getItem('gb_monthlyData');
-                var sPlans = localStorage.getItem('gb_plans');
-                var sWishlists = localStorage.getItem('gb_wishlists');
+        function handleLogin(e) {
+            e.preventDefault();
+            var pass = document.getElementById('loginPass').value;
+            if (pass === ADMIN_PASSWORD) {
+                localStorage.setItem('gb_admin_session', "true"); // SIMPAN SESSION LOGIN DI HP
+                document.getElementById('loginOverlay').classList.add('hidden');
+                document.getElementById('loginError').classList.add('hidden');
+                initApp();
+            } else {
+                document.getElementById('loginError').classList.remove('hidden');
+            }
+        }
 
-                if (sSalary !== null) mainSalary = JSON.parse(sSalary);
-                if (sData !== null) monthlyData = JSON.parse(sData);
-                if (sPlans !== null) plans = JSON.parse(sPlans);
-                if (sWishlists !== null) wishlists = JSON.parse(sWishlists);
-            } catch(e) {
-                console.error("Storage load error:", e);
+        function handleLogout() {
+            if (confirm("Apakah Anda ingin keluar dari session HP ini?")) {
+                localStorage.removeItem('gb_admin_session');
+                location.reload();
             }
         }
 
         function initApp() {
-            loadDataFromStorage(); // Load data saat dibuka
-            
+            loadLocalData();
             var monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
             var headerElem = document.getElementById('monthYearHeader');
             if(headerElem) {
                 headerElem.innerHTML = '<i class="fa-solid fa-calendar-days"></i> Rekap • ' + monthNames[currentMonth] + ' ' + currentYear;
             }
-            
-            var salaryElem = document.getElementById('mainSalaryText');
-            if(salaryElem) salaryElem.innerText = 'Rp' + mainSalary.toLocaleString('id-ID');
-
             renderCalendarGrid();
             selectDate(selectedDay);
-            renderPlans();
-            renderWishlists();
             recalculate();
+        }
+
+        function saveLocalData() {
+            localStorage.setItem('gb_monthlyData', JSON.stringify(monthlyData));
+        }
+
+        function loadLocalData() {
+            var data = localStorage.getItem('gb_monthlyData');
+            if(data) monthlyData = JSON.parse(data);
         }
 
         function renderCalendarGrid() {
@@ -413,7 +278,7 @@
                 var colorClass = 'bg-navy-900 border-navy-700 text-gray-400';
 
                 if (monthlyData[day] && monthlyData[day].length > 0) {
-                    if (dayExpense <= DAILY_LIMIT) {
+                    if (dayExpense <= 35000) {
                         colorClass = 'bg-emerald-500/20 border-emerald-500/50 text-emerald-400 font-bold';
                     } else {
                         colorClass = 'bg-rose-500/20 border-rose-500/50 text-rose-400 font-bold';
@@ -465,7 +330,7 @@
             
             if(spentElem) spentElem.innerText = 'Rp' + expense.toLocaleString('id-ID');
             if(remElem) {
-                var remainingDayLimit = DAILY_LIMIT - expense;
+                var remainingDayLimit = 35000 - expense;
                 if(remainingDayLimit < 0) {
                     remElem.innerText = '-Rp' + Math.abs(remainingDayLimit).toLocaleString('id-ID');
                     remElem.className = 'font-bold text-rose-400 text-sm';
@@ -506,60 +371,10 @@
         function deleteTransaction(index) {
             if(monthlyData[selectedDay]) {
                 monthlyData[selectedDay].splice(index, 1);
-                saveDataToStorage(); // Auto-save
+                saveLocalData();
                 recalculate();
                 selectDate(selectedDay);
             }
-        }
-
-        function renderPlans() {
-            var container = document.getElementById('planContainer');
-            if(!container) return;
-            var totalPlan = plans.reduce(function(sum, p) { return sum + p.amount; }, 0);
-            
-            var totalPlanElem = document.getElementById('totalPlanText');
-            if(totalPlanElem) totalPlanElem.innerText = 'Rp' + totalPlan.toLocaleString('id-ID');
-
-            if (plans.length === 0) {
-                container.innerHTML = '<div class="p-3 rounded-xl bg-navy-800/50 border border-navy-700/50 text-center text-xs text-gray-400 italic">Belum ada rencana pengeluaran.</div>';
-                return;
-            }
-
-            var html = '';
-            for(var i=0; i<plans.length; i++) {
-                var p = plans[i];
-                html += '<div class="p-3 rounded-xl bg-navy-800 border border-navy-700 flex justify-between items-center text-xs"><div><p class="font-semibold text-white">' + p.name + '</p><p class="text-[10px] text-gray-400">Target: Mendatang</p></div><div class="flex items-center gap-2.5"><span class="font-bold text-gold-400">Rp' + p.amount.toLocaleString('id-ID') + '</span><button onclick="deletePlan(' + p.id + ')" class="text-gray-500 hover:text-rose-400 p-1"><i class="fa-solid fa-trash-can text-xs"></i></button></div></div>';
-            }
-            container.innerHTML = html;
-        }
-
-        function deletePlan(id) {
-            plans = plans.filter(function(p) { return p.id !== id; });
-            saveDataToStorage(); // Auto-save
-            renderPlans();
-        }
-
-        function renderWishlists() {
-            var container = document.getElementById('wishlistContainer');
-            if(!container) return;
-            if (wishlists.length === 0) {
-                container.innerHTML = '<div class="p-3 rounded-xl bg-navy-800/50 border border-navy-700/50 text-center text-xs text-gray-400 italic">Belum ada wishlist.</div>';
-                return;
-            }
-
-            var html = '';
-            for(var i=0; i<wishlists.length; i++) {
-                var w = wishlists[i];
-                var eggDays = Math.round(w.price / 15000);
-                html += '<div class="p-3 rounded-xl bg-navy-800 border border-navy-700 flex justify-between items-center text-xs"><div><p class="font-semibold text-white">' + w.name + '</p><p class="text-[10px] text-gray-400">Setara ~' + eggDays + ' Hari Budget Telur Bulking</p></div><div class="flex items-center gap-2.5"><div class="text-right"><p class="font-bold text-gold-400">Rp' + w.price.toLocaleString('id-ID') + '</p><span class="text-[9px] px-1.5 py-0.5 bg-gold-500/10 text-gold-400 rounded border border-gold-500/20">Ditahan Dulu</span></div><button onclick="deleteWishlist(' + w.id + ')" class="text-gray-500 hover:text-rose-400 p-1"><i class="fa-solid fa-trash-can text-xs"></i></button></div></div>';
-            }
-            container.innerHTML = html;
-        }
-
-        function deleteWishlist(id) {
-            wishlists = wishlists.filter(function(w) { return w.id !== id; });
-            saveDataToStorage(); // Auto-save
-            renderWishlists();
         }
 
         function handleTransaction(e) {
@@ -572,8 +387,11 @@
                 var time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
                 
                 monthlyData[selectedDay].unshift({ type: 'out', name: name, amount: amount, time: time });
+                saveLocalData();
 
-                saveDataToStorage(); // Auto-save
+                // SINKRONISASI KE GOOGLE SHEETS
+                syncToGoogleSheets('out', name, amount, selectedDay);
+
                 recalculate();
                 selectDate(selectedDay);
 
@@ -593,8 +411,11 @@
                 var time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
                 monthlyData[selectedDay].unshift({ type: 'in', name: name, amount: amount, time: time });
+                saveLocalData();
 
-                saveDataToStorage(); // Auto-save
+                // SINKRONISASI KE GOOGLE SHEETS
+                syncToGoogleSheets('in', name, amount, selectedDay);
+
                 recalculate();
                 selectDate(selectedDay);
 
@@ -604,34 +425,28 @@
             }
         }
 
-        function addWishlist(e) {
-            e.preventDefault();
-            var name = document.getElementById('wishName').value;
-            var price = parseInt(document.getElementById('wishPrice').value);
+        function syncToGoogleSheets(type, name, amount, day) {
+            if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("https://script.google.com/macros/s/AKfycbzafroWFLQ1cxRj-vFLhHikgYfpZyPt2EfKoGir2RzLi50Qw4t3MRsYxgd-wpwylKkRZw/exec")) return;
+            
+            var payload = {
+                action: "add",
+                tanggal: day,
+                jenis: type === 'in' ? 'Masuk' : 'Keluar',
+                keterangan: name,
+                nominal: amount,
+                waktu: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+            };
 
-            if (name && price) {
-                wishlists.unshift({ id: Date.now(), name: name, price: price });
-                saveDataToStorage(); // Auto-save
-                renderWishlists();
-                document.getElementById('wishName').value = '';
-                document.getElementById('wishPrice').value = '';
-                closeModal('wishlistModal');
-            }
-        }
-
-        function addPlan(e) {
-            e.preventDefault();
-            var name = document.getElementById('planName').value;
-            var amount = parseInt(document.getElementById('planAmount').value);
-
-            if (name && amount) {
-                plans.unshift({ id: Date.now(), name: name, amount: amount });
-                saveDataToStorage(); // Auto-save
-                renderPlans();
-                document.getElementById('planName').value = '';
-                document.getElementById('planAmount').value = '';
-                closeModal('planModal');
-            }
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            }).then(function() {
+                console.log("Berhasil Sync ke Google Sheets!");
+            }).catch(function(err) {
+                console.error("Gagal Sync:", err);
+            });
         }
 
         function recalculate() {
@@ -644,7 +459,7 @@
             }
 
             var totalIncome = mainSalary + totalExtraIncome;
-            var totalExpense = FIXED_EXPENSES + totalDailyExpense;
+            var totalExpense = 1700000 + totalDailyExpense;
             var remainingOperational = totalIncome - totalExpense;
 
             var incText = document.getElementById('totalIncomeText');
@@ -665,54 +480,8 @@
             if(elem) elem.classList.add('hidden'); 
         }
 
-        function updateMainSalary(e) {
-            e.preventDefault();
-            var val = parseInt(document.getElementById('salaryInput').value);
-            if(val) {
-                mainSalary = val;
-                var salaryElem = document.getElementById('mainSalaryText');
-                if(salaryElem) salaryElem.innerText = 'Rp' + mainSalary.toLocaleString('id-ID');
-                saveDataToStorage(); // Auto-save
-                recalculate();
-                closeModal('salaryModal');
-            }
-        }
-
-        function checkLimitWarning() {
-            var amount = parseInt(document.getElementById('txAmount').value) || 0;
-            var todaySpent = getDayExpense(selectedDay);
-            var projectedSpent = todaySpent + amount;
-            var warningBox = document.getElementById('warningBox');
-            var warningText = document.getElementById('warningText');
-            var submitBtn = document.getElementById('submitBtn');
-
-            if (projectedSpent > DAILY_LIMIT) {
-                var over = projectedSpent - DAILY_LIMIT;
-                if(warningText) warningText.innerText = 'Nominal ini membuat Anda MELEBIHI jatah harian sebesar Rp' + over.toLocaleString('id-ID') + '! Yakin tetap lanjut?';
-                if(warningBox) warningBox.classList.remove('hidden');
-                if(submitBtn) {
-                    submitBtn.classList.remove('from-gold-500', 'to-gold-600');
-                    submitBtn.classList.add('bg-rose-500', 'text-white');
-                }
-            } else {
-                if(warningBox) warningBox.classList.add('hidden');
-                if(submitBtn) {
-                    submitBtn.classList.add('from-gold-500', 'to-gold-600');
-                    submitBtn.classList.remove('bg-rose-500', 'text-white');
-                }
-            }
-        }
-
-        // PWA REGISTRATION
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(function(reg) { console.log('SW Registered', reg); })
-                    .catch(function(err) { console.log('SW Fail', err); });
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', initApp);
+        // PERIKSA SESSION SAAT APLIKASI DIBUKA
+        document.addEventListener('DOMContentLoaded', checkSession);
     </script>
 </body>
 </html>
