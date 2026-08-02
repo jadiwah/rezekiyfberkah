@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lang="id" class="dark">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gajian Penuh Berkah V12</title>
+    <title>Gajian Penuh Berkah V13</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@600&display=swap"
-        rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@600&display=swap" rel="stylesheet">
+    
     <!-- PWA Meta Tags -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0B132B">
@@ -35,36 +32,17 @@
         }
     </script>
     <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #0B132B;
-            color: #F3F4F6;
-        }
-
-        .neon-gold-shadow {
-            box-shadow: 0 0 15px rgba(234, 179, 8, 0.2);
-        }
-
-        .glow-border {
-            border: 1px solid rgba(234, 179, 8, 0.3);
-        }
-
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #2A365C;
-            border-radius: 4px;
-        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0B132B; color: #F3F4F6; }
+        .neon-gold-shadow { box-shadow: 0 0 15px rgba(234, 179, 8, 0.2); }
+        .glow-border { border: 1px solid rgba(234, 179, 8, 0.3); }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: #2A365C; border-radius: 4px; }
     </style>
 </head>
-
 <body class="pb-36 max-w-md mx-auto min-h-screen border-x border-navy-700 bg-navy-900 relative shadow-2xl">
 
     <!-- HEADER & QUOTE -->
-    <header
-        class="p-5 bg-gradient-to-b from-navy-800 to-navy-900 border-b border-navy-700 sticky top-0 z-30 backdrop-blur-md bg-opacity-90 space-y-2">
+    <header class="p-5 bg-gradient-to-b from-navy-800 to-navy-900 border-b border-navy-700 sticky top-0 z-30 backdrop-blur-md bg-opacity-90 space-y-2">
         <div class="flex justify-between items-center">
             <div>
                 <p class="text-[11px] text-gold-400 font-bold uppercase tracking-wider" id="monthYearHeader">
@@ -85,9 +63,8 @@
 
     <main class="p-4 space-y-5">
 
-        <!-- REKAP SALDO KEUANGAN -->
-        <section
-            class="p-5 rounded-2xl bg-gradient-to-br from-navy-800 via-navy-800 to-navy-700 glow-border neon-gold-shadow space-y-4">
+        <!-- REKAP SALDO KEUANGAN & BATAS HARIAN -->
+        <section class="p-5 rounded-2xl bg-gradient-to-br from-navy-800 via-navy-800 to-navy-700 glow-border neon-gold-shadow space-y-4">
             <div class="flex justify-between items-center border-b border-navy-700/80 pb-3">
                 <div>
                     <span class="text-[10px] text-gray-400 uppercase font-semibold">Gaji Utama Bulanan</span>
@@ -115,6 +92,18 @@
                     <h2 class="text-xl font-extrabold text-gold-400" id="totalRemaining">Rp1.350.000</h2>
                 </div>
             </div>
+
+            <!-- DITAMBAHKAN KEMBALI: WIDGET BATAS HARIAN (Rp35.000/HARI) -->
+            <div class="p-3 rounded-xl bg-navy-900/90 border border-navy-700/80 flex justify-between items-center text-xs">
+                <div>
+                    <p class="text-gray-400 text-[10px]">Terpakai Tanggal Ini:</p>
+                    <p class="font-bold text-white text-sm" id="todaySpentText">Rp0</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-gray-400 text-[10px]">Sisa Jatah Harian (Batas 35k):</p>
+                    <p class="font-bold text-emerald-400 text-sm" id="todayRemainingText">Rp35.000</p>
+                </div>
+            </div>
         </section>
 
         <!-- KALENDER BULANAN -->
@@ -127,22 +116,14 @@
             </div>
 
             <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-gold-400">
-                <div>Min</div>
-                <div>Sen</div>
-                <div>Sel</div>
-                <div>Rab</div>
-                <div>Kam</div>
-                <div>Jum</div>
-                <div>Sab</div>
+                <div>Min</div><div>Sen</div><div>Sel</div><div>Rab</div><div>Kam</div><div>Jum</div><div>Sab</div>
             </div>
 
             <div id="calendarGrid" class="grid grid-cols-7 gap-1.5 text-center text-xs"></div>
 
             <div class="flex justify-around items-center pt-2 border-t border-navy-700/60 text-[10px] text-gray-400">
-                <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Hemat
-                    (&le;35K)</div>
-                <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-rose-500"></span> Over-budget
-                </div>
+                <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Hemat (&le;35K)</div>
+                <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-rose-500"></span> Over-budget</div>
                 <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-navy-700"></span> Kosong</div>
             </div>
         </section>
@@ -151,8 +132,7 @@
         <section class="space-y-2.5">
             <div class="flex justify-between items-center">
                 <h3 class="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-2">
-                    <i class="fa-solid fa-receipt text-gold-500"></i> Riwayat
-                    <span id="logDateTitle" class="text-gold-400">Hari Ini</span>
+                    <i class="fa-solid fa-receipt text-gold-500"></i> Riwayat <span id="logDateTitle" class="text-gold-400">Hari Ini</span>
                 </h3>
                 <div class="flex gap-1.5">
                     <button onclick="openModal('incomeModal')" class="px-2 py-1 bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-bold rounded-lg text-[10px] flex items-center gap-1 active:scale-95 transition">
@@ -185,8 +165,7 @@
                     <h3 class="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-2">
                         <i class="fa-solid fa-clock-rotate-left text-gold-500"></i> Rencana Pengeluaran
                     </h3>
-                    <p class="text-[10px] text-gold-400 font-bold mt-0.5">Total Estimasi:
-                        <span id="totalPlanText">Rp0</span></p>
+                    <p class="text-[10px] text-gold-400 font-bold mt-0.5">Total Estimasi: <span id="totalPlanText">Rp0</span></p>
                 </div>
                 <button onclick="openModal('planModal')" class="text-xs text-gold-400 font-semibold flex items-center gap-1">
                     <i class="fa-solid fa-plus text-[10px]"></i> Rencana
@@ -195,11 +174,11 @@
             <div id="planContainer" class="space-y-2"></div>
         </section>
 
-        <!-- WISHLIST / REM -->
+        <!-- WISHLIST / REM SHOPEE -->
         <section class="space-y-2.5">
             <div class="flex justify-between items-center">
                 <h3 class="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-2">
-                    <i class="fa-solid fa-bag-shopping text-gold-500"></i> Wishlist & Rem
+                    <i class="fa-solid fa-bag-shopping text-gold-500"></i> Wishlist & Rem Shopee
                 </h3>
                 <button onclick="openModal('wishlistModal')" class="text-xs text-gold-400 font-semibold flex items-center gap-1">
                     <i class="fa-solid fa-plus text-[10px]"></i> Wishlist
@@ -210,12 +189,10 @@
 
         <!-- FOOTER DOA BERSAMA -->
         <footer class="pt-6 pb-2 px-4 text-center border-t border-navy-700/60 mt-8">
-            <div
-                class="p-4 rounded-2xl bg-gradient-to-b from-navy-800/80 to-navy-800/30 border border-gold-500/20 space-y-1.5">
+            <div class="p-4 rounded-2xl bg-gradient-to-b from-navy-800/80 to-navy-800/30 border border-gold-500/20 space-y-1.5">
                 <i class="fa-solid fa-hands-praying text-gold-400 text-sm"></i>
                 <p class="text-xs text-gray-300 italic leading-relaxed">
-                    "Ya Allah tunjukkan kepada hamba betapa mudahnya hamba mendapatkan rezeki yang banyak dan berkah
-                    serta ringan dalam bersedekah."
+                    "Ya Allah tunjukkan kepada hamba betapa mudahnya hamba mendapatkan rezeki yang banyak dan berkah serta ringan dalam bersedekah."
                 </p>
             </div>
         </footer>
@@ -223,12 +200,10 @@
     </main>
 
     <!-- MODAL GAJI UTAMA -->
-    <div id="salaryModal"
-        class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
+    <div id="salaryModal" class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
         <div class="bg-navy-800 border-t border-gold-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
             <div class="flex justify-between items-center">
-                <h3 class="text-base font-bold text-white flex items-center gap-2">
-                    <i class="fa-solid fa-money-bill-wave text-gold-400"></i> Atur Gaji Utama</h3>
+                <h3 class="text-base font-bold text-white flex items-center gap-2"><i class="fa-solid fa-money-bill-wave text-gold-400"></i> Atur Gaji Utama</h3>
                 <button onclick="closeModal('salaryModal')" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form onsubmit="updateMainSalary(event)" class="space-y-3">
@@ -242,18 +217,15 @@
     <div id="txModal" class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
         <div class="bg-navy-800 border-t border-gold-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
             <div class="flex justify-between items-center">
-                <h3 class="text-base font-bold text-white flex items-center gap-2">
-                    <i class="fa-solid fa-pen-to-square text-gold-400"></i> Catat Pengeluaran Harian</h3>
+                <h3 class="text-base font-bold text-white flex items-center gap-2"><i class="fa-solid fa-pen-to-square text-gold-400"></i> Catat Pengeluaran Harian</h3>
                 <button onclick="closeModal('txModal')" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form onsubmit="handleTransaction(event)" class="space-y-3">
                 <input type="text" id="txName" required placeholder="Keterangan (Misal: Telur 8 Butir)" class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white focus:border-gold-500 outline-none">
                 <input type="number" id="txAmount" oninput="checkLimitWarning()" required placeholder="Nominal (Rp)" class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white focus:border-gold-500 outline-none">
 
-                <div id="warningBox"
-                    class="hidden p-3 rounded-xl bg-rose-500/10 border border-rose-500/40 text-rose-400 text-xs space-y-1">
-                    <p class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation"></i>
-                        PERINGATAN OVER-BUDGET!</p>
+                <div id="warningBox" class="hidden p-3 rounded-xl bg-rose-500/10 border border-rose-500/40 text-rose-400 text-xs space-y-1">
+                    <p class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation"></i> PERINGATAN OVER-BUDGET!</p>
                     <p id="warningText" class="text-[11px] text-rose-300/90 leading-tight"></p>
                 </div>
 
@@ -263,12 +235,10 @@
     </div>
 
     <!-- MODAL PEMASUKAN TAMBAHAN -->
-    <div id="incomeModal"
-        class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
+    <div id="incomeModal" class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
         <div class="bg-navy-800 border-t border-emerald-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
             <div class="flex justify-between items-center">
-                <h3 class="text-base font-bold text-white flex items-center gap-2">
-                    <i class="fa-solid fa-hand-holding-dollar text-emerald-400"></i> Pemasukan Tambahan</h3>
+                <h3 class="text-base font-bold text-white flex items-center gap-2"><i class="fa-solid fa-hand-holding-dollar text-emerald-400"></i> Pemasukan Tambahan</h3>
                 <button onclick="closeModal('incomeModal')" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form onsubmit="addIncome(event)" class="space-y-3">
@@ -280,12 +250,10 @@
     </div>
 
     <!-- MODAL WISHLIST -->
-    <div id="wishlistModal"
-        class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
+    <div id="wishlistModal" class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
         <div class="bg-navy-800 border-t border-gold-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
             <div class="flex justify-between items-center">
-                <h3 class="text-base font-bold text-white flex items-center gap-2">
-                    <i class="fa-solid fa-cart-shopping text-gold-400"></i> Wishlist / Rem Shopee</h3>
+                <h3 class="text-base font-bold text-white flex items-center gap-2"><i class="fa-solid fa-cart-shopping text-gold-400"></i> Wishlist / Rem Shopee</h3>
                 <button onclick="closeModal('wishlistModal')" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form onsubmit="addWishlist(event)" class="space-y-3">
@@ -300,8 +268,7 @@
     <div id="planModal" class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
         <div class="bg-navy-800 border-t border-gold-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
             <div class="flex justify-between items-center">
-                <h3 class="text-base font-bold text-white flex items-center gap-2">
-                    <i class="fa-solid fa-clock text-gold-400"></i> Rencana Pengeluaran</h3>
+                <h3 class="text-base font-bold text-white flex items-center gap-2"><i class="fa-solid fa-clock text-gold-400"></i> Rencana Pengeluaran</h3>
                 <button onclick="closeModal('planModal')" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form onsubmit="addPlan(event)" class="space-y-3">
@@ -313,7 +280,6 @@
     </div>
 
     <script>
-        // JS LOGIC TERISOLASI RAPI DENGAN STRING TEMPLATE TERSEGMENTASI
         const DAILY_LIMIT = 35000;
         const FIXED_EXPENSES = 1700000;
         
@@ -402,6 +368,22 @@
 
             if(incElem) incElem.innerText = '+Rp' + income.toLocaleString('id-ID');
             if(expElem) expElem.innerText = '-Rp' + expense.toLocaleString('id-ID');
+
+            // UPDATE WIDGET BATAS HARIAN REAL-TIME BERDASARKAN TANGGAL DIPILIH
+            var spentElem = document.getElementById('todaySpentText');
+            var remElem = document.getElementById('todayRemainingText');
+            
+            if(spentElem) spentElem.innerText = 'Rp' + expense.toLocaleString('id-ID');
+            if(remElem) {
+                var remainingDayLimit = DAILY_LIMIT - expense;
+                if(remainingDayLimit < 0) {
+                    remElem.innerText = '-Rp' + Math.abs(remainingDayLimit).toLocaleString('id-ID');
+                    remElem.className = 'font-bold text-rose-400 text-sm';
+                } else {
+                    remElem.innerText = 'Rp' + remainingDayLimit.toLocaleString('id-ID');
+                    remElem.className = 'font-bold text-emerald-400 text-sm';
+                }
+            }
 
             renderDailyLogs();
             renderCalendarGrid();
@@ -635,5 +617,4 @@
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
-
 </html>
