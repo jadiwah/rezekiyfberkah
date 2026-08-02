@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rezekiku Penuh Berkah</title>
+    <title>Gajian Penuh Berkah V14</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@600&display=swap" rel="stylesheet">
@@ -93,7 +93,7 @@
                 </div>
             </div>
 
-            <!-- DITAMBAHKAN KEMBALI: WIDGET BATAS HARIAN (Rp35.000/HARI) -->
+            <!-- WIDGET BATAS HARIAN -->
             <div class="p-3 rounded-xl bg-navy-900/90 border border-navy-700/80 flex justify-between items-center text-xs">
                 <div>
                     <p class="text-gray-400 text-[10px]">Terpakai Tanggal Ini:</p>
@@ -199,7 +199,7 @@
 
     </main>
 
-    <!-- MODAL GAJI UTAMA -->
+    <!-- MODALS -->
     <div id="salaryModal" class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
         <div class="bg-navy-800 border-t border-gold-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
             <div class="flex justify-between items-center">
@@ -213,7 +213,6 @@
         </div>
     </div>
 
-    <!-- MODAL CATAT EXPENSE HARIAN -->
     <div id="txModal" class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
         <div class="bg-navy-800 border-t border-gold-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
             <div class="flex justify-between items-center">
@@ -234,7 +233,6 @@
         </div>
     </div>
 
-    <!-- MODAL PEMASUKAN TAMBAHAN -->
     <div id="incomeModal" class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
         <div class="bg-navy-800 border-t border-emerald-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
             <div class="flex justify-between items-center">
@@ -249,7 +247,6 @@
         </div>
     </div>
 
-    <!-- MODAL WISHLIST -->
     <div id="wishlistModal" class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
         <div class="bg-navy-800 border-t border-gold-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
             <div class="flex justify-between items-center">
@@ -264,7 +261,6 @@
         </div>
     </div>
 
-    <!-- MODAL RENCANA -->
     <div id="planModal" class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
         <div class="bg-navy-800 border-t border-gold-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
             <div class="flex justify-between items-center">
@@ -279,6 +275,7 @@
         </div>
     </div>
 
+    <!-- JAVASCRIPT LENGKAP FITUR LOCALSTORAGE SAVER -->
     <script>
         const DAILY_LIMIT = 35000;
         const FIXED_EXPENSES = 1700000;
@@ -294,12 +291,47 @@
         let plans = [{ id: 1, name: 'Servis Motor / Ganti Oli', amount: 85000 }];
         let wishlists = [{ id: 1, name: 'Sepatu Gym / Olahraga', price: 250000 }];
 
+        // FUNGSI UNTUK MENYIMPAN DATA KE HP
+        function saveDataToStorage() {
+            try {
+                localStorage.setItem('gb_mainSalary', JSON.stringify(mainSalary));
+                localStorage.setItem('gb_monthlyData', JSON.stringify(monthlyData));
+                localStorage.setItem('gb_plans', JSON.stringify(plans));
+                localStorage.setItem('gb_wishlists', JSON.stringify(wishlists));
+            } catch(e) {
+                console.error("Storage save error:", e);
+            }
+        }
+
+        // FUNGSI UNTUK MEMBACA DATA DARI HP
+        function loadDataFromStorage() {
+            try {
+                var sSalary = localStorage.getItem('gb_mainSalary');
+                var sData = localStorage.getItem('gb_monthlyData');
+                var sPlans = localStorage.getItem('gb_plans');
+                var sWishlists = localStorage.getItem('gb_wishlists');
+
+                if (sSalary !== null) mainSalary = JSON.parse(sSalary);
+                if (sData !== null) monthlyData = JSON.parse(sData);
+                if (sPlans !== null) plans = JSON.parse(sPlans);
+                if (sWishlists !== null) wishlists = JSON.parse(sWishlists);
+            } catch(e) {
+                console.error("Storage load error:", e);
+            }
+        }
+
         function initApp() {
+            loadDataFromStorage(); // Load data saat dibuka
+            
             var monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
             var headerElem = document.getElementById('monthYearHeader');
             if(headerElem) {
                 headerElem.innerHTML = '<i class="fa-solid fa-calendar-days"></i> Rekap • ' + monthNames[currentMonth] + ' ' + currentYear;
             }
+            
+            var salaryElem = document.getElementById('mainSalaryText');
+            if(salaryElem) salaryElem.innerText = 'Rp' + mainSalary.toLocaleString('id-ID');
+
             renderCalendarGrid();
             selectDate(selectedDay);
             renderPlans();
@@ -369,7 +401,6 @@
             if(incElem) incElem.innerText = '+Rp' + income.toLocaleString('id-ID');
             if(expElem) expElem.innerText = '-Rp' + expense.toLocaleString('id-ID');
 
-            // UPDATE WIDGET BATAS HARIAN REAL-TIME BERDASARKAN TANGGAL DIPILIH
             var spentElem = document.getElementById('todaySpentText');
             var remElem = document.getElementById('todayRemainingText');
             
@@ -416,6 +447,7 @@
         function deleteTransaction(index) {
             if(monthlyData[selectedDay]) {
                 monthlyData[selectedDay].splice(index, 1);
+                saveDataToStorage(); // Auto-save
                 recalculate();
                 selectDate(selectedDay);
             }
@@ -444,6 +476,7 @@
 
         function deletePlan(id) {
             plans = plans.filter(function(p) { return p.id !== id; });
+            saveDataToStorage(); // Auto-save
             renderPlans();
         }
 
@@ -466,6 +499,7 @@
 
         function deleteWishlist(id) {
             wishlists = wishlists.filter(function(w) { return w.id !== id; });
+            saveDataToStorage(); // Auto-save
             renderWishlists();
         }
 
@@ -480,6 +514,7 @@
                 
                 monthlyData[selectedDay].unshift({ type: 'out', name: name, amount: amount, time: time });
 
+                saveDataToStorage(); // Auto-save
                 recalculate();
                 selectDate(selectedDay);
 
@@ -500,6 +535,7 @@
 
                 monthlyData[selectedDay].unshift({ type: 'in', name: name, amount: amount, time: time });
 
+                saveDataToStorage(); // Auto-save
                 recalculate();
                 selectDate(selectedDay);
 
@@ -516,6 +552,7 @@
 
             if (name && price) {
                 wishlists.unshift({ id: Date.now(), name: name, price: price });
+                saveDataToStorage(); // Auto-save
                 renderWishlists();
                 document.getElementById('wishName').value = '';
                 document.getElementById('wishPrice').value = '';
@@ -530,6 +567,7 @@
 
             if (name && amount) {
                 plans.unshift({ id: Date.now(), name: name, amount: amount });
+                saveDataToStorage(); // Auto-save
                 renderPlans();
                 document.getElementById('planName').value = '';
                 document.getElementById('planAmount').value = '';
@@ -575,6 +613,7 @@
                 mainSalary = val;
                 var salaryElem = document.getElementById('mainSalaryText');
                 if(salaryElem) salaryElem.innerText = 'Rp' + mainSalary.toLocaleString('id-ID');
+                saveDataToStorage(); // Auto-save
                 recalculate();
                 closeModal('salaryModal');
             }
