@@ -1,2 +1,2 @@
 # rezekiyfberkah
-Gajian Yoga bisa Berkah
+Rezeki Yoga bisa Melimpah dan Berkah
