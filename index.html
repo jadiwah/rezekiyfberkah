@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gajian Penuh Berkah V17</title>
+    <title>Rezekiku Penuh Berkah</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link
@@ -61,7 +61,7 @@
 
 <body class="pb-36 max-w-md mx-auto min-h-screen border-x border-navy-700 bg-navy-900 relative shadow-2xl">
 
-    <!-- OVERLAY LOGIN ADMIN (FIXED & ALWAYS CLICKABLE) -->
+    <!-- OVERLAY LOGIN ADMIN -->
     <div id="loginOverlay"
         class="fixed inset-0 bg-navy-900/95 z-[100] flex items-center justify-center p-6 backdrop-blur-md">
         <div
@@ -82,7 +82,7 @@
                 </div>
                 <div>
                     <label class="text-[10px] text-gray-400 uppercase font-semibold">Password</label>
-                    <input type="password" id="loginPass" placeholder="Masukkan password" class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white outline-none focus:border-gold-500">
+                    <input type="password" id="loginPass" placeholder="Masukkan password (123)" class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white outline-none focus:border-gold-500">
                 </div>
                 <p id="loginError" class="text-xs text-rose-400 hidden text-center font-semibold">Password salah!</p>
                 <button type="button" onclick="submitLogin()" class="w-full py-3 bg-gradient-to-r from-gold-500 to-gold-600 text-navy-900 font-bold rounded-xl text-sm shadow-md transition active:scale-95 cursor-pointer">
@@ -202,7 +202,65 @@
             </div>
             <div id="dailyLog" class="space-y-2"></div>
         </section>
+
+        <!-- DIKEMBALIKAN: RENCANA PENGELUARAN MENDATANG -->
+        <section class="space-y-2.5">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h3 class="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-clock-rotate-left text-gold-500"></i> Rencana Pengeluaran
+                    </h3>
+                    <p class="text-[10px] text-gold-400 font-bold mt-0.5">Total Estimasi:
+                        <span id="totalPlanText">Rp0</span></p>
+                </div>
+                <button onclick="openModal('planModal')" class="text-xs text-gold-400 font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-plus text-[10px]"></i> Rencana
+                </button>
+            </div>
+            <div id="planContainer" class="space-y-2"></div>
+        </section>
+
+        <!-- DIKEMBALIKAN: WISHLIST / REM SHOPEE -->
+        <section class="space-y-2.5">
+            <div class="flex justify-between items-center">
+                <h3 class="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-2">
+                    <i class="fa-solid fa-bag-shopping text-gold-500"></i> Wishlist & Rem
+                </h3>
+                <button onclick="openModal('wishlistModal')" class="text-xs text-gold-400 font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-plus text-[10px]"></i> Wishlist
+                </button>
+            </div>
+            <div id="wishlistContainer" class="space-y-2"></div>
+        </section>
+
+        <!-- DIKEMBALIKAN: FOOTER DOA BERSAMA -->
+        <footer class="pt-6 pb-2 px-4 text-center border-t border-navy-700/60 mt-8">
+            <div
+                class="p-4 rounded-2xl bg-gradient-to-b from-navy-800/80 to-navy-800/30 border border-gold-500/20 space-y-1.5">
+                <i class="fa-solid fa-hands-praying text-gold-400 text-sm"></i>
+                <p class="text-xs text-gray-300 italic leading-relaxed">
+                    "Ya Allah tunjukkan kepada hamba betapa mudahnya hamba mendapatkan rezeki yang banyak dan berkah
+                    serta bisa rutin  bersedekah."
+                </p>
+            </div>
+        </footer>
     </main>
+
+    <!-- MODAL GAJI UTAMA -->
+    <div id="salaryModal"
+        class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
+        <div class="bg-navy-800 border-t border-gold-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-money-bill-wave text-gold-400"></i> Atur Gaji Utama</h3>
+                <button onclick="closeModal('salaryModal')" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="updateMainSalary(event)" class="space-y-3">
+                <input type="number" id="salaryInput" placeholder="Masukkan Nominal Gaji (Rp)" required class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white outline-none">
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-gold-500 to-gold-600 text-navy-900 font-bold rounded-xl text-sm">Simpan Gaji Utama</button>
+            </form>
+        </div>
+    </div>
 
     <!-- MODAL PEMASUKAN -->
     <div id="incomeModal"
@@ -237,9 +295,42 @@
         </div>
     </div>
 
+    <!-- MODAL WISHLIST -->
+    <div id="wishlistModal"
+        class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
+        <div class="bg-navy-800 border-t border-gold-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-cart-shopping text-gold-400"></i> Wishlist / Rem Shopee</h3>
+                <button onclick="closeModal('wishlistModal')" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="addWishlist(event)" class="space-y-3">
+                <input type="text" id="wishName" placeholder="Nama Barang Impian" required class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white outline-none">
+                <input type="number" id="wishPrice" placeholder="Harga Barang (Rp)" required class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white outline-none">
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-gold-500 to-gold-600 text-navy-900 font-bold rounded-xl text-sm">Simpan Wishlist</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL RENCANA -->
+    <div id="planModal" class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
+        <div class="bg-navy-800 border-t border-gold-500/30 rounded-t-3xl p-6 w-full max-w-md space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-clock text-gold-400"></i> Rencana Pengeluaran</h3>
+                <button onclick="closeModal('planModal')" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="addPlan(event)" class="space-y-3">
+                <input type="text" id="planName" placeholder="Kebutuhan (Misal: Beli Buku/Aki Motor)" required class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white outline-none">
+                <input type="number" id="planAmount" placeholder="Estimasi Biaya (Rp)" required class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-sm text-white outline-none">
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-gold-500 to-gold-600 text-navy-900 font-bold rounded-xl text-sm">Simpan Rencana</button>
+            </form>
+        </div>
+    </div>
+
     <script>
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzafroWFLQ1cxRj-vFLhHikgYfpZyPt2EfKoGir2RzLi50Qw4t3MRsYxgd-wpwylKkRZw/exec"; 
-        const ADMIN_PASSWORD = "12399";
+        const GOOGLE_SCRIPT_URL = "PASTE_WEB_APP_URL_KAMU_DI_SINI"; 
+        const ADMIN_PASSWORD = "123";
 
         let mainSalary = 3500000;
         let now = new Date();
@@ -247,7 +338,10 @@
         let currentYear = now.getFullYear();
         let currentMonth = now.getMonth();
         let daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
         let monthlyData = {};
+        let plans = [{ id: 1, name: 'Servis Motor / Ganti Oli', amount: 85000 }];
+        let wishlists = [{ id: 1, name: 'Sepatu Gym / Olahraga', price: 250000 }];
 
         function checkSession() {
             var isAuth = localStorage.getItem('gb_admin_session');
@@ -259,7 +353,6 @@
             }
         }
 
-        // FUNGSI SUBMIT LOGIN YANG BARU & DIPASTIKAN BISA DIKLIK
         function submitLogin() {
             var passInput = document.getElementById('loginPass');
             var pass = passInput ? passInput.value : '';
@@ -290,18 +383,33 @@
             if(headerElem) {
                 headerElem.innerHTML = '<i class="fa-solid fa-calendar-days"></i> Rekap • ' + monthNames[currentMonth] + ' ' + currentYear;
             }
+            var salaryElem = document.getElementById('mainSalaryText');
+            if(salaryElem) salaryElem.innerText = 'Rp' + mainSalary.toLocaleString('id-ID');
+
             renderCalendarGrid();
             selectDate(selectedDay);
+            renderPlans();
+            renderWishlists();
             recalculate();
         }
 
         function saveLocalData() {
+            localStorage.setItem('gb_mainSalary', JSON.stringify(mainSalary));
             localStorage.setItem('gb_monthlyData', JSON.stringify(monthlyData));
+            localStorage.setItem('gb_plans', JSON.stringify(plans));
+            localStorage.setItem('gb_wishlists', JSON.stringify(wishlists));
         }
 
         function loadLocalData() {
-            var data = localStorage.getItem('gb_monthlyData');
-            if(data) monthlyData = JSON.parse(data);
+            var sSalary = localStorage.getItem('gb_mainSalary');
+            var sData = localStorage.getItem('gb_monthlyData');
+            var sPlans = localStorage.getItem('gb_plans');
+            var sWishlists = localStorage.getItem('gb_wishlists');
+
+            if (sSalary !== null) mainSalary = JSON.parse(sSalary);
+            if (sData !== null) monthlyData = JSON.parse(sData);
+            if (sPlans !== null) plans = JSON.parse(sPlans);
+            if (sWishlists !== null) wishlists = JSON.parse(sWishlists);
         }
 
         function renderCalendarGrid() {
@@ -418,6 +526,56 @@
             }
         }
 
+        function renderPlans() {
+            var container = document.getElementById('planContainer');
+            if(!container) return;
+            var totalPlan = plans.reduce(function(sum, p) { return sum + p.amount; }, 0);
+            
+            var totalPlanElem = document.getElementById('totalPlanText');
+            if(totalPlanElem) totalPlanElem.innerText = 'Rp' + totalPlan.toLocaleString('id-ID');
+
+            if (plans.length === 0) {
+                container.innerHTML = '<div class="p-3 rounded-xl bg-navy-800/50 border border-navy-700/50 text-center text-xs text-gray-400 italic">Belum ada rencana pengeluaran.</div>';
+                return;
+            }
+
+            var html = '';
+            for(var i=0; i<plans.length; i++) {
+                var p = plans[i];
+                html += '<div class="p-3 rounded-xl bg-navy-800 border border-navy-700 flex justify-between items-center text-xs"><div><p class="font-semibold text-white">' + p.name + '</p><p class="text-[10px] text-gray-400">Target: Mendatang</p></div><div class="flex items-center gap-2.5"><span class="font-bold text-gold-400">Rp' + p.amount.toLocaleString('id-ID') + '</span><button onclick="deletePlan(' + p.id + ')" class="text-gray-500 hover:text-rose-400 p-1"><i class="fa-solid fa-trash-can text-xs"></i></button></div></div>';
+            }
+            container.innerHTML = html;
+        }
+
+        function deletePlan(id) {
+            plans = plans.filter(function(p) { return p.id !== id; });
+            saveLocalData();
+            renderPlans();
+        }
+
+        function renderWishlists() {
+            var container = document.getElementById('wishlistContainer');
+            if(!container) return;
+            if (wishlists.length === 0) {
+                container.innerHTML = '<div class="p-3 rounded-xl bg-navy-800/50 border border-navy-700/50 text-center text-xs text-gray-400 italic">Belum ada wishlist.</div>';
+                return;
+            }
+
+            var html = '';
+            for(var i=0; i<wishlists.length; i++) {
+                var w = wishlists[i];
+                var eggDays = Math.round(w.price / 15000);
+                html += '<div class="p-3 rounded-xl bg-navy-800 border border-navy-700 flex justify-between items-center text-xs"><div><p class="font-semibold text-white">' + w.name + '</p><p class="text-[10px] text-gray-400">Setara ~' + eggDays + ' Hari Budget Telur Bulking</p></div><div class="flex items-center gap-2.5"><div class="text-right"><p class="font-bold text-gold-400">Rp' + w.price.toLocaleString('id-ID') + '</p><span class="text-[9px] px-1.5 py-0.5 bg-gold-500/10 text-gold-400 rounded border border-gold-500/20">Ditahan Dulu</span></div><button onclick="deleteWishlist(' + w.id + ')" class="text-gray-500 hover:text-rose-400 p-1"><i class="fa-solid fa-trash-can text-xs"></i></button></div></div>';
+            }
+            container.innerHTML = html;
+        }
+
+        function deleteWishlist(id) {
+            wishlists = wishlists.filter(function(w) { return w.id !== id; });
+            saveLocalData();
+            renderWishlists();
+        }
+
         function handleTransaction(e) {
             e.preventDefault();
             var name = document.getElementById('txName').value;
@@ -464,8 +622,38 @@
             }
         }
 
+        function addWishlist(e) {
+            e.preventDefault();
+            var name = document.getElementById('wishName').value;
+            var price = parseInt(document.getElementById('wishPrice').value);
+
+            if (name && price) {
+                wishlists.unshift({ id: Date.now(), name: name, price: price });
+                saveLocalData();
+                renderWishlists();
+                document.getElementById('wishName').value = '';
+                document.getElementById('wishPrice').value = '';
+                closeModal('wishlistModal');
+            }
+        }
+
+        function addPlan(e) {
+            e.preventDefault();
+            var name = document.getElementById('planName').value;
+            var amount = parseInt(document.getElementById('planAmount').value);
+
+            if (name && amount) {
+                plans.unshift({ id: Date.now(), name: name, amount: amount });
+                saveLocalData();
+                renderPlans();
+                document.getElementById('planName').value = '';
+                document.getElementById('planAmount').value = '';
+                closeModal('planModal');
+            }
+        }
+
         function syncToGoogleSheets(type, name, amount, day) {
-            if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("https://script.google.com/macros/s/AKfycbzafroWFLQ1cxRj-vFLhHikgYfpZyPt2EfKoGir2RzLi50Qw4t3MRsYxgd-wpwylKkRZw/exec")) return;
+            if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("PASTE_WEB_APP_URL")) return;
             
             var payload = {
                 action: "add",
@@ -508,6 +696,19 @@
             if(incText) incText.innerText = 'Rp' + totalIncome.toLocaleString('id-ID');
             if(expText) expText.innerText = 'Rp' + totalExpense.toLocaleString('id-ID');
             if(remText) remText.innerText = 'Rp' + remainingOperational.toLocaleString('id-ID');
+        }
+
+        function updateMainSalary(e) {
+            e.preventDefault();
+            var val = parseInt(document.getElementById('salaryInput').value);
+            if(val) {
+                mainSalary = val;
+                var salaryElem = document.getElementById('mainSalaryText');
+                if(salaryElem) salaryElem.innerText = 'Rp' + mainSalary.toLocaleString('id-ID');
+                saveLocalData();
+                recalculate();
+                closeModal('salaryModal');
+            }
         }
 
         function openModal(id) { 
